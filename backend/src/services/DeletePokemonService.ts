@@ -1,6 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Pokemon from '../models/Pokemon';
+import AppError from '../errors/AppError';
 
 interface Request {
   id: string;
@@ -12,7 +13,7 @@ class DeletePokemonService {
 
     const pokemon = await pokemonRepository.findOne(id);
 
-    if (!pokemon) throw new Error('Pokemon not Found');
+    if (!pokemon) throw new AppError('Pokemon not Found');
 
     await pokemonRepository.remove(pokemon);
   }

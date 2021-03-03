@@ -3,16 +3,20 @@ import { getRepository } from 'typeorm';
 import Pokemon from '../models/Pokemon';
 import AppError from '../errors/AppError';
 
-class CreatePokemonService {
-  public async execute(pokemon: Pokemon): Promise<Pokemon> {
+class UpdatePokemonService {
+  public async execute(updatedPokemon: Pokemon): Promise<Pokemon> {
     const pokemonRepository = getRepository(Pokemon);
 
     const pokedexNumber = await pokemonRepository.findOne({
-      pokedex_number: pokemon.pokedex_number,
+      pokedex_number: updatedPokemon.pokedex_number,
     });
 
     const pokemonName = await pokemonRepository.findOne({
-      name: pokemon.name,
+      name: updatedPokemon.name,
+    });
+
+    let pokemon = await pokemonRepository.findOne({
+      id: updatedPokemon.id,
     });
 
     if (pokedexNumber) {
@@ -22,12 +26,16 @@ class CreatePokemonService {
       throw new AppError('This pokemon name already exists');
     }
 
-    const newPokemon = pokemonRepository.create(pokemon);
+    if (!pokemon) {
+      throw new AppError('Pokemon was not found');
+    }
 
-    await pokemonRepository.save(newPokemon);
+    pokemon = updatedPokemon;
 
-    return newPokemon;
+    await pokemonRepository.save(pokemon);
+
+    return pokemon;
   }
 }
 
-export default CreatePokemonService;
+export default UpdatePokemonService;
