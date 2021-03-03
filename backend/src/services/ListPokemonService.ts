@@ -42,6 +42,23 @@ class ListPokemonService {
 
     return pokemon;
   }
+
+  public async pagination(page: string): Promise<Pokemon[]> {
+    const pokemonRepository = getRepository(Pokemon);
+    const limitPerPage = 15;
+
+    const pokemons = pokemonRepository.find({
+      order: {pokedex_number: 'ASC'},
+      skip: (limitPerPage * parseInt(page)) - limitPerPage,
+      take: 15,
+    });
+
+    if(!pokemons) {
+      throw new AppError('There is no more pokemons');
+    }
+
+    return pokemons;
+  }
 }
 
 export default ListPokemonService;

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import CreatePokemonService from '../services/CreatePokemonService';
+import FillDatabaseService from '../services/FillDatabaseService';
 import DeletePokemonService from '../services/DeletePokemonService';
 import UpdatePokemonService from '../services/UpdatePokemonService';
 import ListPokemonService from '../services/ListPokemonService';
@@ -22,6 +23,16 @@ pokemonRouter.get('/searchPokemon', async (request, response) => {
   const pokemon = await listPokemon.searchPokemon({ param });
 
   return response.status(200).json(pokemon)
+});
+
+pokemonRouter.get('/:page', async (request, response) => {
+  const { page } = request.params;
+
+  const listPokemon = new ListPokemonService();
+
+  const pokemons = await listPokemon.pagination(page);
+
+  return response.status(200).json(pokemons);
 })
 
 pokemonRouter.post('/createPokemon', async (request, response) => {
@@ -29,6 +40,15 @@ pokemonRouter.post('/createPokemon', async (request, response) => {
 
   const createPokemon = new CreatePokemonService();
   const newPokemon = await createPokemon.execute(pokemon);
+
+  return response.status(201).json(newPokemon);
+});
+
+pokemonRouter.post('/fill', async (request, response) => {
+  const pokemon = request.body;
+
+  const fillDatabase = new FillDatabaseService();
+  const newPokemon = await fillDatabase.execute(pokemon);
 
   return response.status(201).json(newPokemon);
 });
