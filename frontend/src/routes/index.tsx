@@ -8,7 +8,7 @@ import Details from '../pages/Details';
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
-    <Route path="/pokemons/:page" component={Pokemons} />
+    <Route path="/pokemons/page/:page+" exact component={Pokemons} />
     <Route path="/pokemons/:pokemon+" exact component={Details} />
   </Switch>
 );

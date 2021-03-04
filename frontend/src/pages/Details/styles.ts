@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const Background = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: #cfcfcf;
+`;
+
 export const Container = styled.div`
   max-width: 1060px;
   margin: 25px auto;

@@ -2,12 +2,17 @@ import React from 'react';
 
 import { Container } from './styles';
 
-const Attribute: React.FC = () => {
+interface Stats {
+  name: string;
+  stats: number;
+}
+
+const Attribute: React.FC<Stats> = ({ stats, name }: Stats) => {
   return (
     <Container>
-      <p>Ataque</p>
+      <p>{name}</p>
       <div className="base">
-        <div className="progress" />
+        <div className="progress" style={{ width: `${stats}px` }} />
       </div>
     </Container>
   );

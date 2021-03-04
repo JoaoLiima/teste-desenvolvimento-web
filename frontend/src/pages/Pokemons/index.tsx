@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import { backendApi } from '../../services/api';
 
@@ -7,6 +8,10 @@ import NavigationMenu from '../../components/NavigationMenu';
 import SearchBox from '../../components/SearchBox';
 import PokemonCard from '../../components/PokemonCard';
 
+interface PageParams {
+  page: string;
+}
+
 interface Pokemon {
   name: string;
   pokedex_number: number;
@@ -14,30 +19,30 @@ interface Pokemon {
 
 const Pokemons: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([] as Pokemon[]);
-
-  const url = window.location.href.split('/');
-  const page = url[4];
+  const { params } = useRouteMatch<PageParams>();
 
   useEffect(() => {
-    backendApi.get(`${page}`).then(response => {
+    backendApi.get(`/page/${params.page}`).then(response => {
       setPokemons(response.data);
     });
-  }, [page]);
+  }, [params.page]);
 
   return (
     <>
       <Container>
         <NavigationMenu />
-        <div>
+        <div className="search">
           <SearchBox />
         </div>
         <Items>
           {pokemons.map(pokemon => {
             return (
-              <PokemonCard
-                name={pokemon.name}
-                pokedex_number={pokemon.pokedex_number}
-              />
+              <Link key={pokemon.pokedex_number} to={`../${pokemon.name}`}>
+                <PokemonCard
+                  name={pokemon.name}
+                  pokedex_number={pokemon.pokedex_number}
+                />
+              </Link>
             );
           })}
         </Items>

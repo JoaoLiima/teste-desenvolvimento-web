@@ -15,10 +15,11 @@ export const Container = styled.div`
   .base {
     width: 200px;
     background-color: #ababab;
+    position: relative;
   }
 
   .progress {
-    width: 150px;
     background-color: #ee9218;
+    position: absolute;
   }
 `;

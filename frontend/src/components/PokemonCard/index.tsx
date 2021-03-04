@@ -17,15 +17,6 @@ interface PokemonImage {
 
 const PokemonCard: React.FC<Request> = ({ name, pokedex_number }: Request) => {
   const [pokemon, setPokemon] = useState<PokemonImage | null>(null);
-  const zeros = () => {
-    if (pokedex_number < 10) {
-      return '00';
-    }
-    if (pokedex_number > 10 && pokedex_number < 100) {
-      return '0';
-    }
-    return '';
-  };
 
   useEffect(() => {
     pokeApi.get(`${name.toLowerCase()}`).then(response => {
@@ -35,7 +26,7 @@ const PokemonCard: React.FC<Request> = ({ name, pokedex_number }: Request) => {
 
   return (
     <Container>
-      <p>{`#${zeros()}${pokedex_number}`}</p>
+      <p>{`#${`00${pokedex_number}`.slice(-3)}`}</p>
       {pokemon && <img src={pokemon.sprites.front_default} alt="" />}
       <p>{name}</p>
     </Container>

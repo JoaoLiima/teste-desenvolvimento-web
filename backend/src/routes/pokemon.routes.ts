@@ -15,8 +15,8 @@ pokemonRouter.get('/', async (request, response) => {
   return response.status(200).json(pokemons);
 });
 
-pokemonRouter.get('/searchPokemon', async (request, response) => {
-  const { param } = request.body;
+pokemonRouter.get('/searchPokemon/:param', async (request, response) => {
+  const { param } = request.params;
 
   const listPokemon = new ListPokemonService();
 
@@ -25,7 +25,7 @@ pokemonRouter.get('/searchPokemon', async (request, response) => {
   return response.status(200).json(pokemon)
 });
 
-pokemonRouter.get('/:page', async (request, response) => {
+pokemonRouter.get('/page/:page', async (request, response) => {
   const { page } = request.params;
 
   const listPokemon = new ListPokemonService();

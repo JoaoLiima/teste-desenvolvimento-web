@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
               <img src={pokemon.sprites.front_default} alt={pokemon.name} />
             ) : <Filler />
             }
-            <a href="pokemons/1">Explorar</a>
+            <a href="pokemons/page/1">Explorar</a>
           </Container>
         </Filter>
       </Background>
