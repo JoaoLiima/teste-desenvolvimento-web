@@ -15,6 +15,13 @@ pokemonRouter.get('/', async (request, response) => {
   return response.status(200).json(pokemons);
 });
 
+pokemonRouter.get('/last', async (request, response) => {
+  const listPokemon = new ListPokemonService();
+
+  const pokemon = await listPokemon.getLastPokedexNumber();
+  return response.status(200).json(pokemon);
+});
+
 pokemonRouter.get('/searchPokemon/:param', async (request, response) => {
   const { param } = request.params;
 
@@ -53,8 +60,8 @@ pokemonRouter.post('/fill', async (request, response) => {
   return response.status(201).json(newPokemon);
 });
 
-pokemonRouter.delete('/', async (request, response) => {
-  const id = request.body;
+pokemonRouter.delete('/:id', async (request, response) => {
+  const { id } = request.params;
 
   const deletePokemon = new DeletePokemonService();
   await deletePokemon.execute(id);

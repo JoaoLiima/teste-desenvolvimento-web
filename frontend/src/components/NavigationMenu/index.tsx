@@ -11,7 +11,7 @@ const NavigationMenu: React.FC = () => {
       <Link to="/">
         <img src={pokeball} alt="Navegar para o menu" />
       </Link>
-      <Link to="create">Criar</Link>
+      <Link to="../../create-pokemon">Criar</Link>
     </Container>
   );
 };

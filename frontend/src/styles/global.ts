@@ -17,6 +17,7 @@ export default createGlobalStyle`
   }
 
   #root {
+    background-color: #cfcfcf;
     height: inherit;
     margin: 0 auto;
   }

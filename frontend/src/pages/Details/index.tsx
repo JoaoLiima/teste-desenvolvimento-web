@@ -8,6 +8,8 @@ import NavigationMenu from '../../components/NavigationMenu';
 import { Background, Container, Pokemon, Type } from './styles';
 import Images from './images';
 
+import NotFound from '../NotFound';
+
 import Attribute from '../../components/Attribute';
 
 interface PokemonParams {
@@ -30,19 +32,34 @@ interface PokemonImage {
   };
 }
 
+interface DeleteParam {
+  id: string;
+}
+
 const Details: React.FC = () => {
   const { params } = useRouteMatch<PokemonParams>();
-  const [pokemon, setPokemon] = useState<Pokemon[] | null>(null);
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
   const [image, setImage] = useState<PokemonImage | null>(null);
 
   useEffect(() => {
-    backendApi.get(`/searchPokemon/${params.pokemon}`).then(response => {
-      setPokemon(response.data);
-    });
-    pokeApi.get(`/${params.pokemon.toLowerCase()}`).then(response => {
-      setImage(response.data);
-    });
+    try {
+      backendApi.get(`/searchPokemon/${params.pokemon}`).then(response => {
+        setPokemon(response.data);
+      });
+      pokeApi.get(`/${params.pokemon.toLowerCase()}`).then(response => {
+        setImage(response.data);
+      });
+    } catch (err) {
+      alert(err.message);
+    }
   }, [params.pokemon]);
+
+  async function deletePokemon() {
+    const response = await backendApi.get(`/searchPokemon/${params.pokemon}`);
+    const [{ id }] = response.data;
+
+    const deleted = await backendApi.delete(`/${id}`);
+  }
 
   function typeImage(type: string) {
     switch (type) {
@@ -89,9 +106,9 @@ const Details: React.FC = () => {
 
   return (
     <>
-      <Background>
-        <NavigationMenu />
-        {pokemon ? (
+      {pokemon.length > 0 ? (
+        <Background>
+          <NavigationMenu />
           <Container>
             <div>
               <Attribute stats={(pokemon[0].attack * 200) / 414} name="Ataque" />
@@ -103,11 +120,11 @@ const Details: React.FC = () => {
               {image ? (
                 <img src={image.sprites.front_default} alt={pokemon[0].name} />
               ) : (
-                  <img
-                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                    alt={pokemon[0].name}
-                  />
-                )}
+                <img
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
+                  alt={pokemon[0].name}
+                />
+              )}
               <p>{pokemon[0].name}</p>
               <Type>
                 {typeImage(pokemon[0].type_1)}
@@ -115,11 +132,11 @@ const Details: React.FC = () => {
               </Type>
             </Pokemon>
             <div className="button">
-              <button type="button">Editar</button>
+              <button type="button" onClick={deletePokemon}>Excluir</button>
             </div>
           </Container>
-        ) : null}
-      </Background>
+        </Background>
+      ) : <NotFound />}
     </>
   );
 };

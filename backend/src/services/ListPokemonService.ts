@@ -10,13 +10,31 @@ interface Request {
 class ListPokemonService {
   public async execute(): Promise<Pokemon[]> {
     const pokemonRepository = getRepository(Pokemon);
-    const pokemons = await pokemonRepository.find();
+    const pokemons = await pokemonRepository.find({
+      order: {pokedex_number: 'ASC'},
+    });
 
     return pokemons;
   }
 
+  public async getLastPokedexNumber(): Promise<Pokemon> {
+    const pokemonRepository = getRepository(Pokemon);
+    const pokemon = await pokemonRepository.findOne({
+      order: {pokedex_number: 'DESC'},
+    });
+
+    if (!pokemon) {
+      throw new AppError('There is no pokemons on the database');
+    }
+
+    return pokemon;
+  }
+
   public async searchPokemon({ param }: Request): Promise<Pokemon | Pokemon[]> {
     const pokemonRepository = getRepository(Pokemon);
+
+    const nameInLowerCase = param.toLocaleLowerCase();
+    const name =  nameInLowerCase[0].toUpperCase() + nameInLowerCase.slice(1);
 
     let pokemon;
 
@@ -28,8 +46,9 @@ class ListPokemonService {
       });
     } catch {
       pokemon = await pokemonRepository.find({
+        order: {pokedex_number: 'ASC'},
         where: [
-          {name: param},
+          {name: name},
           {type_1: param},
           {type_2: param},
         ]

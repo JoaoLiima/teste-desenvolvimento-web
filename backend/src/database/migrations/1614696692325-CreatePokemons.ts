@@ -101,6 +101,7 @@ export class CreatePokemons1614696692325 implements MigrationInterface {
               name: 'legendary',
               type: 'boolean',
               isNullable: true,
+              default: false,
             },
             {
               name: 'aquireable',
@@ -136,6 +137,7 @@ export class CreatePokemons1614696692325 implements MigrationInterface {
               name: 'shiny',
               type: 'boolean',
               isNullable: true,
+              default: false,
             },
             {
               name: 'nest',
