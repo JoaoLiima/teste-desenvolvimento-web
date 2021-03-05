@@ -6,14 +6,14 @@ Para realização do desafio optei por usar Node, Typescript e Express para o ba
 ## Execução da aplicação
 
 Para executar a aplicação: 
-Clone o repositório utilizando `git clone`;
-Troque de branch com `git checkout JoaoPauloFagundeLima`;
-Entre na pasta backend e instale as dependências com `yarn install` ou `npm install`;
-Para configurar o acesso ao banco de dados, altere o arquivo `ormconfig.json`;
-Na raiz do projeto, há um arquivo `database.json` para popular o banco de dados;
-Execute a aplicação com `yarn dev:server` ou `npm dev:server`;
-Acesse a pasta frontend e instale as dependências com `yarn install` ou `npm install`;
-Execute o frontend com o comando `yarn start` ou `npm start`.
+1. Clone o repositório utilizando `git clone`;
+2. Troque de branch com `git checkout JoaoPauloFagundeLima`;
+3. Entre na pasta backend e instale as dependências com `yarn install` ou `npm install`;
+4. Para configurar o acesso ao banco de dados, altere o arquivo `ormconfig.json`;
+5. Na raiz do projeto, há um arquivo `database.json` para popular o banco de dados;
+6. Execute a aplicação com `yarn dev:server` ou `npm dev:server`;
+7. Acesse a pasta frontend e instale as dependências com `yarn install` ou `npm install`;
+8. Execute o frontend com o comando `yarn start` ou `npm start`.
 
 
 ## Funcionalidades
