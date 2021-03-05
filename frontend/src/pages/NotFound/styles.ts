@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: inherit;
 `;
 
 export const Content = styled.div`
@@ -10,8 +10,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
-  margin: auto;
+  margin: 50px auto;
 
   font-family: 'Press Start 2P', cursive;
 

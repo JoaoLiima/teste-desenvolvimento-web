@@ -29,9 +29,13 @@ const Pokemons: React.FC = () => {
   const { params } = useRouteMatch<PageParams>();
 
   useEffect(() => {
-    backendApi.get(`/page/${params.page}`).then(response => {
-      setPokemons(response.data);
-    });
+    try {
+      backendApi.get(`/page/${params.page}`).then(response => {
+        setPokemons(response.data);
+      });
+    } catch (err) {
+      alert(err.message);
+    }
   }, [params.page]);
 
   async function handleSearchPokemon(

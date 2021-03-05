@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   margin: 50px auto;
 
-  max-width: 1075px;
+  max-width: 800px;
 
   .filler {
     width: 100%;
@@ -18,6 +18,12 @@ export const Container = styled.div`
 
     font-family: 'VT323', monospace;
     font-size: 20px;
+
+    transition: background-color 0.2s;
+
+    :hover {
+      background-color: #dedede;
+    }
   }
 
   form {

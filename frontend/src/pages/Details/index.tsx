@@ -32,10 +32,6 @@ interface PokemonImage {
   };
 }
 
-interface DeleteParam {
-  id: string;
-}
-
 const Details: React.FC = () => {
   const { params } = useRouteMatch<PokemonParams>();
   const [pokemon, setPokemon] = useState<Pokemon[]>([]);
@@ -55,10 +51,14 @@ const Details: React.FC = () => {
   }, [params.pokemon]);
 
   async function deletePokemon() {
-    const response = await backendApi.get(`/searchPokemon/${params.pokemon}`);
-    const [{ id }] = response.data;
+    try {
+      const response = await backendApi.get(`/searchPokemon/${params.pokemon}`);
+      const [{ id }] = response.data;
 
-    const deleted = await backendApi.delete(`/${id}`);
+      await backendApi.delete(`/${id}`);
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   function typeImage(type: string) {

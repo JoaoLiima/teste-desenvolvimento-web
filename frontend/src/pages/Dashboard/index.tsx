@@ -17,10 +17,15 @@ const Dashboard: React.FC = () => {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
 
   useEffect(() => {
-    const pokedexNumber = Math.floor(Math.random() * 822);
-    pokeApi.get(`${pokedexNumber}`).then(response => {
-      setPokemon(response.data);
-    });
+    try {
+      const pokedexNumber = Math.floor(Math.random() * 822);
+      pokeApi.get(`${pokedexNumber}`).then(response => {
+        setPokemon(response.data);
+      });
+    } catch (err) {
+      alert(err.message)
+    }
+
   }, []);
 
   return (

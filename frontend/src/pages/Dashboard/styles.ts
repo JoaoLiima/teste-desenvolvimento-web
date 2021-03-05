@@ -39,6 +39,12 @@ export const Container = styled.div`
     font-family: 'Press Start 2P', cursive;
     font-size: 15px;
     color: black;
+
+    transition: background-color 0.2s;
+
+    :hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
   }
 `;
 

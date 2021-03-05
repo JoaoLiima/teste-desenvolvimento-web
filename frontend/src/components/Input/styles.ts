@@ -4,7 +4,7 @@ export const Container = styled.div`
   font-family: 'VT323', monospace;
   font-size: 25px;
   color: black;
-  margin: 0 10px;
+  margin: 10px;
 
   input {
     border: none;

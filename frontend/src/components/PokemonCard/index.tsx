@@ -19,9 +19,13 @@ const PokemonCard: React.FC<Request> = ({ name, pokedex_number }: Request) => {
   const [pokemon, setPokemon] = useState<PokemonImage | null>(null);
 
   useEffect(() => {
-    pokeApi.get(`${name.toLowerCase()}`).then(response => {
-      setPokemon(response.data);
-    });
+    try {
+      pokeApi.get(`${name.toLowerCase()}`).then(response => {
+        setPokemon(response.data);
+      });
+    } catch (err) {
+      alert(err.message);
+    }
   }, [name]);
 
   return (
